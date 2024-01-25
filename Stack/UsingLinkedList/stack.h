@@ -8,14 +8,9 @@ class Stack
 {
 private:
   LinkedList linkedList;
-  int stackSize;
   int stackBottom = -1;
 
 public:
-  Stack(int stackSize) : stackSize(stackSize)
-  {
-  }
-
   void push(int val)
   {
     if (isFull())
@@ -61,7 +56,7 @@ public:
 
   bool isFull()
   {
-    if (stackBottom == stackSize - 1)
+    if (stackBottom == 19)
     {
       return 1;
     }
@@ -99,4 +94,4 @@ public:
   }
 };
 
-#endif // STACK_H
+#endif // STACK_h
