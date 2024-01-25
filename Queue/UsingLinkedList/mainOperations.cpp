@@ -5,7 +5,7 @@
 int main()
 {
   int arr[10] = {1, 3, 5, 7, 9, 4, 5, 7, 3, 2};
-  Queue queue;
+  Queue queue(20);
   printf("Push operations:\n");
   for (int i = 0; i < 10; i++)
   {

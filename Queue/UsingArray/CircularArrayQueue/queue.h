@@ -6,13 +6,17 @@
 class Queue
 {
 private:
-  int queueSize = 10;
-  int arr[10];
+  int queueSize;
+  int *queueArray = (int *)malloc(sizeof(int) * queueSize);
   int queueTop = -1;
   int queueBottom = 0;
   int queuedSize = 0;
 
 public:
+  Queue(int queueSize) : queueSize(queueSize), queueArray(new int[queueSize])
+  {
+  }
+
   void push(int val)
   {
     if (isFull())
@@ -21,7 +25,7 @@ public:
       return;
     }
     queueTop = (queueTop + 1) % queueSize;
-    arr[queueTop] = val;
+    queueArray[queueTop] = val;
     queuedSize++;
   }
 
@@ -32,7 +36,7 @@ public:
       printf("Queue underflow!\n");
       return NULL;
     }
-    int bottomVal = arr[queueBottom];
+    int bottomVal = queueArray[queueBottom];
     queueBottom = (queueBottom + 1) % queueSize;
     printf("queueBottom = %d\n", queueBottom);
     queuedSize--;
@@ -46,7 +50,7 @@ public:
       printf("Index out of Queued range!\n");
       return NULL;
     }
-    return arr[(queueBottom + queuedSize - position) % queueSize];
+    return queueArray[(queueBottom + queuedSize - position) % queueSize];
   }
 
   bool isEmpty()
@@ -74,7 +78,7 @@ public:
       printf("Empty Queue!\n");
       return NULL;
     }
-    return arr[queueTop];
+    return queueArray[queueTop];
   }
 
   int bottom()
@@ -84,7 +88,7 @@ public:
       printf("Empty Queue!\n");
       return NULL;
     }
-    return arr[queueBottom];
+    return queueArray[queueBottom];
   }
 
   void print()
@@ -93,15 +97,21 @@ public:
     int i = queueTop;
     while (i != queueBottom)
     {
-      printf("%d\n", arr[i]);
+      printf("%d\n", queueArray[i]);
       i--;
       if (i == -1)
       {
         i = queueSize - 1;
       }
     }
-    printf("%d\n", arr[queueBottom]);
+    printf("%d\n", queueArray[queueBottom]);
     printf("Bottom\n\n");
+  }
+
+  ~Queue()
+  {
+    printf("Queue Destructor: All deleted!");
+    delete[] queueArray;
   }
 };
 

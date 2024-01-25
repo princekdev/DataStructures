@@ -6,12 +6,16 @@
 class Queue
 {
 private:
-  int queueSize = 10;
-  int arr[10];
+  int queueSize;
+  int *queueArray;
   int queueTop = -1;
   int queueBottom = 0;
 
 public:
+  Queue(int queueSize) : queueSize(queueSize), queueArray(new int[queueSize])
+  {
+  }
+
   void push(int val)
   {
     if (isFull())
@@ -20,7 +24,7 @@ public:
       return;
     }
     queueTop++;
-    arr[queueTop] = val;
+    queueArray[queueTop] = val;
   }
 
   int pop()
@@ -31,7 +35,7 @@ public:
       return NULL;
     }
     queueBottom++;
-    return arr[queueBottom - 1];
+    return queueArray[queueBottom - 1];
   }
 
   int peek(int position)
@@ -41,7 +45,7 @@ public:
       printf("Index out of Queued range!\n");
       return NULL;
     }
-    return arr[queueTop + 1 - position];
+    return queueArray[queueTop + 1 - position];
   }
 
   bool isEmpty()
@@ -69,7 +73,7 @@ public:
       printf("Empty Queue!\n");
       return NULL;
     }
-    return arr[queueTop];
+    return queueArray[queueTop];
   }
 
   int bottom()
@@ -79,7 +83,7 @@ public:
       printf("Empty Queue!\n");
       return NULL;
     }
-    return arr[queueBottom];
+    return queueArray[queueBottom];
   }
 
   void print()
@@ -87,9 +91,15 @@ public:
     printf("Top\n");
     for (int i = queueTop; i >= queueBottom; i--)
     {
-      printf("%d\n", arr[i]);
+      printf("%d\n", queueArray[i]);
     }
     printf("Bottom\n\n");
+  }
+
+  ~Queue()
+  {
+    printf("Queue Destructor: All deleted!");
+    delete[] queueArray;
   }
 };
 
