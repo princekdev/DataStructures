@@ -6,11 +6,15 @@
 class Stack
 {
 private:
-  int stackSize = 10;
-  int arr[10];
+  int stackSize;
+  int *stackArray;
   int stackTop = -1;
 
 public:
+  Stack(int stackSize) : stackSize(stackSize), stackArray(new int[stackSize])
+  {
+  }
+
   void push(int val)
   {
     if (isFull())
@@ -18,7 +22,7 @@ public:
       printf("Stack overflow!\n");
       return;
     }
-    arr[stackTop + 1] = val;
+    stackArray[stackTop + 1] = val;
     stackTop++;
   }
 
@@ -30,7 +34,7 @@ public:
       return NULL;
     }
     stackTop--;
-    return arr[stackTop + 1];
+    return stackArray[stackTop + 1];
   }
 
   int peek(int position)
@@ -40,7 +44,7 @@ public:
       printf("Index out of stacked range!\n");
       return NULL;
     }
-    return arr[stackTop + 1 - position];
+    return stackArray[stackTop + 1 - position];
   }
 
   bool isEmpty()
@@ -68,7 +72,7 @@ public:
       printf("Empty stack!\n");
       return NULL;
     }
-    return arr[stackTop];
+    return stackArray[stackTop];
   }
 
   int bottom()
@@ -78,7 +82,7 @@ public:
       printf("Empty stack!\n");
       return NULL;
     }
-    return arr[0];
+    return stackArray[0];
   }
 
   void print()
@@ -86,9 +90,15 @@ public:
     printf("Top\n");
     for (int i = stackTop; i > -1; i--)
     {
-      printf("%d\n", arr[i]);
+      printf("%d\n", stackArray[i]);
     }
     printf("Bottom\n\n");
+  }
+
+  ~Stack()
+  {
+    printf("Stack Destructor: All deleted!");
+    delete[] stackArray;
   }
 };
 
