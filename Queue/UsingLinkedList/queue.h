@@ -7,15 +7,11 @@
 class Queue
 {
 private:
+  int queueSize = 10;
   LinkedList linkedList;
-  int queueSize;
   int queuedSize = 0;
 
 public:
-  Queue(int queueSize) : queueSize(queueSize)
-  {
-  }
-
   void push(int val)
   {
     if (isFull())

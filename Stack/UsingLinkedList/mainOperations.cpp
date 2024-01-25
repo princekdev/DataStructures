@@ -5,7 +5,7 @@
 int main()
 {
   int arr[5] = {1, 3, 5, 7, 9};
-  Stack stack(10);
+  Stack stack;
   printf("Push operations:\n");
   for (int i = 0; i < 5; i++)
   {
