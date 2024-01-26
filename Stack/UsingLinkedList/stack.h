@@ -9,11 +9,16 @@ class Stack
 private:
   LinkedList linkedList;
   int stackSize;
+  bool noLimit;
   int stackBottom = -1;
 
 public:
   Stack(int stackSize) : stackSize(stackSize)
   {
+    if (stackSize < 0)
+    {
+      noLimit = 1;
+    }
   }
 
   void push(int val)
@@ -61,6 +66,10 @@ public:
 
   bool isFull()
   {
+    if (noLimit)
+    {
+      return 0;
+    }
     if (stackBottom == stackSize - 1)
     {
       return 1;

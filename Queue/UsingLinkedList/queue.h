@@ -9,11 +9,16 @@ class Queue
 private:
   LinkedList linkedList;
   int queueSize;
+  bool noLimit;
   int queuedSize = 0;
 
 public:
   Queue(int queueSize) : queueSize(queueSize)
   {
+    if (queueSize < 0)
+    {
+      noLimit = 1;
+    }
   }
 
   void push(int val)
@@ -59,6 +64,10 @@ public:
 
   bool isFull()
   {
+    if (noLimit)
+    {
+      return 0;
+    }
     if (queuedSize == queueSize)
     {
       return 1;
