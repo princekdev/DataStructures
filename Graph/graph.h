@@ -5,15 +5,16 @@
 #include "stack.h"
 #include "linkedlist.h"
 
+template <typename elementType>
 class Graph
 {
 private:
   int graphSize;
-  int *graphArray;
+  elementType *graphArray;
   int graphArrayTop = -1;
   bool **graphLinkageArray;
 
-  int getNode(int data)
+  int getNode(elementType data)
   {
     for (int i = 0; i <= graphArrayTop; i++)
     {
@@ -26,7 +27,7 @@ private:
   }
 
 public:
-  Graph(int graphSize) : graphSize(graphSize), graphArray(new int[graphSize]), graphLinkageArray(new bool *[graphSize])
+  Graph(int graphSize) : graphSize(graphSize), graphArray(new elementType[graphSize]), graphLinkageArray(new bool *[graphSize])
   {
     for (int i = 0; i < graphSize; i++)
     {
@@ -38,17 +39,26 @@ public:
     }
   }
 
-  bool insert(int data)
+  bool insert(elementType data)
   {
+    for (int i = 0; i <= graphArrayTop; i++)
+    {
+      if (graphArray[i] == data)
+      {
+        printf("Already present!\n");
+        return 0;
+      }
+    }
     graphArray[++graphArrayTop] = data;
+    return 1;
   }
 
-  bool link(int data1, int data2)
+  bool link(elementType data1, elementType data2)
   {
     int node1 = getNode(data1), node2 = getNode(data2);
     if (node1 == -1 || node2 == -1)
     {
-      printf("Not present:\n");
+      printf("Not present!\n");
       for (int i = 0; i < graphArrayTop; i++)
       {
         printf("%d ", graphArray[i]);
@@ -63,9 +73,9 @@ public:
     return graphLinkageArray[node1][node2] = 1;
   }
 
-  LinkedList getLinks(int node)
+  LinkedList<int> getLinks(int node)
   {
-    LinkedList nodeLinks;
+    LinkedList<int> nodeLinks;
     for (int i = 0; i <= graphArrayTop; i++)
     {
       if (graphLinkageArray[node][i] == 1)
@@ -76,60 +86,63 @@ public:
     return nodeLinks;
   }
 
-  void breadthFirstSearch(int data)
+  int breadthFirstSearch(elementType data, elementType *&returnArr)
   {
     int startNode = getNode(data);
     if (startNode == -1)
     {
-      return;
+      printf("Not present!\n");
+      return 0;
     }
     if (graphArrayTop == -1)
     {
-      return;
+      return 0;
     }
-    LinkedList visited;
-    Queue explorationQueue(-1);
+    LinkedList<int> visited;
+    Queue<int> explorationQueue(-1);
 
-    explorationQueue.push(startNode);
+    explorationQueue.enqueue(startNode);
     while (!explorationQueue.isEmpty())
     {
-      int visitingNode = explorationQueue.pop();
+      int visitingNode = explorationQueue.dequeue();
       visited.insertAtTail(visitingNode);
 
-      LinkedList links = getLinks(visitingNode);
+      LinkedList<int> links = getLinks(visitingNode);
       int linkedNode = links.deleteAtHead();
       while (linkedNode != NULL)
       {
         if (visited.search(linkedNode) == -1)
         {
-          explorationQueue.push(linkedNode);
+          explorationQueue.enqueue(linkedNode);
         }
         linkedNode = links.deleteAtHead();
       }
     }
 
-    int *nodes;
-    int n = visited.toArray(nodes);
-    for (int i = n - 1; i > -1; i--)
+    int *returnNodes;
+    int returnNodesSize = visited.toArray(returnNodes);
+    returnArr = new elementType[returnNodesSize];
+    for (int i = 0; i < returnNodesSize; i++)
     {
-      printf("%d ", graphArray[nodes[i]]);
+      returnArr[i] = graphArray[returnNodes[returnNodesSize - 1 - i]];
     }
-    printf("\n");
+    delete[] returnNodes;
+    return returnNodesSize;
   }
 
-  void depthFirstSearch(int data)
+  int depthFirstSearch(int data, elementType *&returnArr)
   {
     int startNode = getNode(data);
     if (startNode == -1)
     {
-      return;
+      return 0;
     }
     if (graphArrayTop == -1)
     {
-      return;
+      return 0;
     }
-    LinkedList visited;
-    Stack explorationStack(-1);
+    LinkedList<int> visited;
+    Stack<int> explorationStack(-1);
 
     explorationStack.push(startNode);
     while (!explorationStack.isEmpty())
@@ -137,7 +150,7 @@ public:
       int visitingNode = explorationStack.pop();
       visited.insertAtTail(visitingNode);
 
-      LinkedList links = getLinks(visitingNode);
+      LinkedList<int> links = getLinks(visitingNode);
       int linkedNode = links.deleteAtHead();
       while (linkedNode != NULL)
       {
@@ -149,18 +162,19 @@ public:
       }
     }
 
-    int *nodes;
-    int n = visited.toArray(nodes);
-    for (int i = n - 1; i > -1; i--)
+    int *returnNodes;
+    int returnNodesSize = visited.toArray(returnNodes);
+    returnArr = new elementType[returnNodesSize];
+    for (int i = 0; i < returnNodesSize; i++)
     {
-      printf("%d ", graphArray[nodes[i]]);
+      returnArr[i] = graphArray[returnNodes[returnNodesSize - 1 - i]];
     }
-    printf("\n");
+    delete[] returnNodes;
+    return returnNodesSize;
   }
 
   ~Graph()
   {
-    printf("Graph Destructor: All deleted!");
     delete[] graphArray;
     for (int i = 0; i < graphSize; i++)
     {

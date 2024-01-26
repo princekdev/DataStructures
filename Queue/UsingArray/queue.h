@@ -16,7 +16,7 @@ public:
   {
   }
 
-  void push(int val)
+  void enqueue(int val)
   {
     if (isFull())
     {
@@ -27,7 +27,7 @@ public:
     queueArray[queueTop] = val;
   }
 
-  int pop()
+  int dequeue()
   {
     if (isEmpty())
     {
@@ -98,7 +98,6 @@ public:
 
   ~Queue()
   {
-    printf("Queue Destructor: All deleted!");
     delete[] queueArray;
   }
 };

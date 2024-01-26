@@ -3,25 +3,26 @@
 
 #include <iostream>
 
+template <typename elementType>
 class LinkedList
 {
   class Node
   {
   public:
-    int data;
+    elementType data;
     Node *next = NULL;
-    Node(int val)
+    Node(elementType val)
     {
       data = val;
     }
   };
   Node *head = NULL;
 
-  int toArrayRecursion(Node *&traverser, int *&arr, int i = 0)
+  int toArrayRecursion(Node *&traverser, elementType *&arr, int i = 0)
   {
     if (traverser == NULL)
     {
-      arr = (int *)malloc(sizeof(int) * i);
+      arr = new elementType[i];
       return i;
     }
     int size = toArrayRecursion(traverser->next, arr, i + 1);
@@ -29,19 +30,8 @@ class LinkedList
     return size;
   }
 
-  Node *reverseRecursion(Node *&traverser);
-
 public:
-  ~LinkedList()
-  {
-    while (head != NULL)
-    {
-      deleteAtHead();
-    }
-    printf("LinkedList Destructor: All deleted!");
-  }
-
-  void insertAtHead(int val)
+  void insertAtHead(elementType val)
   {
     Node *newNode = new Node(val);
     if (head == NULL)
@@ -53,7 +43,7 @@ public:
     head = newNode;
   }
 
-  void insertAtTail(int val)
+  void insertAtTail(elementType val)
   {
     Node *newNode = new Node(val);
     if (head == NULL)
@@ -69,20 +59,20 @@ public:
     traverser->next = newNode;
   }
 
-  int deleteAtHead()
+  elementType deleteAtHead()
   {
     if (head == NULL)
     {
       return NULL;
     }
     Node *secondNode = head->next;
-    int headNodeVal = head->data;
+    elementType headNodeVal = head->data;
     delete (head);
     head = secondNode;
     return headNodeVal;
   }
 
-  int deleteAtTail()
+  elementType deleteAtTail()
   {
     if (head == NULL)
     {
@@ -97,13 +87,13 @@ public:
     {
       traverser = traverser->next;
     }
-    int tailNodeVal = traverser->next->data;
+    elementType tailNodeVal = traverser->next->data;
     delete (traverser->next);
     traverser->next = NULL;
     return tailNodeVal;
   }
 
-  int deleteKey(int key)
+  int deleteKey(elementType key)
   {
     if (head == NULL)
     {
@@ -136,7 +126,7 @@ public:
     return -1;
   }
 
-  int search(int key)
+  int search(elementType key)
   {
     Node *traverser = head;
     int i = 0;
@@ -152,7 +142,7 @@ public:
     return -1;
   }
 
-  int findAtIndex(int index)
+  elementType findAtIndex(int index)
   {
     Node *traverser = head;
     for (int i = 0; i < index; i++)
@@ -167,7 +157,7 @@ public:
     return traverser->data;
   }
 
-  int toArray(int *&arr)
+  int toArray(elementType *&arr)
   {
     if (head == NULL)
     {
@@ -176,7 +166,7 @@ public:
     return toArrayRecursion(head, arr);
   }
 
-  int toArrayIterative(int *&arr)
+  int toArrayIterative(elementType *&arr)
   {
     if (head == NULL)
     {
@@ -189,7 +179,7 @@ public:
       traverser = traverser->next;
       size++;
     }
-    arr = new int[size];
+    arr = new elementType[size];
     int i = size - 1;
     traverser = head;
     while (traverser != NULL)
@@ -218,8 +208,13 @@ public:
     printf("NULL | Tail\n\n");
   }
 
-  void reverseIterative();
-  void reverseRecursive();
+  ~LinkedList()
+  {
+    while (head != NULL)
+    {
+      deleteAtHead();
+    }
+  }
 };
 
 #endif // LINKEDLIST_H

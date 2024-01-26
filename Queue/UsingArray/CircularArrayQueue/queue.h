@@ -7,7 +7,7 @@ class Queue
 {
 private:
   int queueSize;
-  int *queueArray = (int *)malloc(sizeof(int) * queueSize);
+  int *queueArray;
   int queueTop = -1;
   int queueBottom = 0;
   int queuedSize = 0;
@@ -17,7 +17,7 @@ public:
   {
   }
 
-  void push(int val)
+  void enqueue(int val)
   {
     if (isFull())
     {
@@ -29,7 +29,7 @@ public:
     queuedSize++;
   }
 
-  int pop()
+  int dequeue()
   {
     if (isEmpty())
     {
@@ -110,7 +110,6 @@ public:
 
   ~Queue()
   {
-    printf("Queue Destructor: All deleted!");
     delete[] queueArray;
   }
 };

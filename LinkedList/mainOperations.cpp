@@ -5,7 +5,7 @@ int main()
 {
   int arr[3] = {2, 4, 5};
 
-  LinkedList linkedList;
+  LinkedList<int> linkedList;
 
   for (int i = 0; i < 3; i++)
   {

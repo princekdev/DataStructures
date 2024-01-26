@@ -4,10 +4,11 @@
 #include <iostream>
 #include "linkedlist.h"
 
+template <typename elementType>
 class Stack
 {
 private:
-  LinkedList linkedList;
+  LinkedList<elementType> linkedList;
   int stackSize;
   bool noLimit;
   int stackBottom = -1;
@@ -21,7 +22,7 @@ public:
     }
   }
 
-  void push(int val)
+  void push(elementType val)
   {
     if (isFull())
     {
@@ -32,20 +33,19 @@ public:
     stackBottom++;
   }
 
-  int pop()
+  elementType pop()
   {
     if (isEmpty())
     {
       printf("Stack underflow!\n");
       return NULL;
     }
-    int val = linkedList.findAtIndex(0);
-    linkedList.deleteAtHead();
+    elementType val = linkedList.deleteAtHead();
     stackBottom--;
     return val;
   }
 
-  int peek(int position)
+  elementType peek(int position)
   {
     if (stackBottom + 1 < position)
     {
@@ -77,7 +77,7 @@ public:
     return 0;
   }
 
-  int top()
+  elementType top()
   {
     if (isEmpty())
     {
@@ -87,7 +87,7 @@ public:
     return linkedList.findAtIndex(0);
   }
 
-  int bottom()
+  elementType bottom()
   {
     if (isEmpty())
     {

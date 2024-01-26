@@ -3,19 +3,20 @@
 
 #include <iostream>
 
+template <typename elementType>
 class Stack
 {
 private:
   int stackSize;
-  int *stackArray;
+  elementType *stackArray;
   int stackTop = -1;
 
 public:
-  Stack(int stackSize) : stackSize(stackSize), stackArray(new int[stackSize])
+  Stack(int stackSize) : stackSize(stackSize), stackArray(new elementType[stackSize])
   {
   }
 
-  void push(int val)
+  void push(elementType val)
   {
     if (isFull())
     {
@@ -26,7 +27,7 @@ public:
     stackTop++;
   }
 
-  int pop()
+  elementType pop()
   {
     if (isEmpty())
     {
@@ -37,7 +38,7 @@ public:
     return stackArray[stackTop + 1];
   }
 
-  int peek(int position)
+  elementType peek(int position)
   {
     if (stackTop + 1 < position)
     {
@@ -65,7 +66,7 @@ public:
     return 0;
   }
 
-  int top()
+  elementType top()
   {
     if (isEmpty())
     {
@@ -75,7 +76,7 @@ public:
     return stackArray[stackTop];
   }
 
-  int bottom()
+  elementType bottom()
   {
     if (isEmpty())
     {
@@ -97,7 +98,6 @@ public:
 
   ~Stack()
   {
-    printf("Stack Destructor: All deleted!");
     delete[] stackArray;
   }
 };

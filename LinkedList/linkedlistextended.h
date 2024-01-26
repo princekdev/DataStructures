@@ -1,5 +1,5 @@
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
+#ifndef LINKEDLISTEXTENDED_H
+#define LINKEDLISTEXTENDED_H
 
 #include <iostream>
 
@@ -28,6 +28,21 @@ class LinkedList
     int size = toArrayRecursion(traverser->next, arr, i + 1);
     arr[size - 1 - i] = traverser->data;
     return size;
+  }
+
+  Node *reverseRecursion(Node *&traverser)
+  {
+    if (traverser->next == NULL)
+    {
+      return traverser;
+    }
+    Node *newHead = reverseRecursion(traverser->next);
+    traverser->next->next = traverser;
+    if (traverser == head)
+    {
+      traverser->next = NULL;
+    }
+    return newHead;
   }
 
 public:
@@ -208,6 +223,30 @@ public:
     printf("NULL | Tail\n\n");
   }
 
+  void reverseIterative()
+  {
+    Node *previousNode = NULL, *currentNode = head, *nextNode = head->next;
+    int i = 0;
+    while (true)
+    {
+      currentNode->next = previousNode;
+      if (nextNode == NULL)
+      {
+        break;
+      }
+      previousNode = currentNode;
+      currentNode = nextNode;
+      nextNode = nextNode->next;
+      i++;
+    }
+    head = currentNode;
+  }
+
+  void reverseRecursive()
+  {
+    head = reverseRecursion(head);
+  }
+
   ~LinkedList()
   {
     while (head != NULL)
@@ -217,4 +256,4 @@ public:
   }
 };
 
-#endif // LINKEDLIST_H
+#endif // LINKEDLISTEXTENDED_H

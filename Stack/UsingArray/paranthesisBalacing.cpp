@@ -1,97 +1,9 @@
 #include <iostream>
-
-class CharStack
-{
-private:
-  int stackSize = 10;
-  char arr[10];
-  int stackTop = -1;
-
-public:
-  void push(char val)
-  {
-    if (isFull())
-    {
-      printf("Stack overflow!\n");
-      return;
-    }
-    arr[stackTop + 1] = val;
-    stackTop++;
-  }
-
-  char pop()
-  {
-    if (isEmpty())
-    {
-      printf("Stack underflow!\n");
-      return NULL;
-    }
-    stackTop--;
-    return arr[stackTop + 1];
-  }
-
-  char peek(int position)
-  {
-    if (stackTop + 1 < position)
-    {
-      printf("Index out of stacked range!\n");
-      return NULL;
-    }
-    return arr[stackTop + 1 - position];
-  }
-
-  bool isEmpty()
-  {
-    if (stackTop == -1)
-    {
-      return 1;
-    }
-    return 0;
-  }
-
-  bool isFull()
-  {
-    if (stackTop == stackSize - 1)
-    {
-      return 1;
-    }
-    return 0;
-  }
-
-  char top()
-  {
-    if (isEmpty())
-    {
-      printf("Empty stack!\n");
-      return NULL;
-    }
-    return arr[stackTop];
-  }
-
-  char bottom()
-  {
-    if (isEmpty())
-    {
-      printf("Empty stack!\n");
-      return NULL;
-    }
-    return arr[0];
-  }
-
-  void printStack()
-  {
-    printf("Top\n");
-    for (int i = stackTop; i > -1; i--)
-    {
-      printf("%c\n", arr[i]);
-    }
-    printf("Bottom\n\n");
-  }
-};
+#include "stack.h"
 
 int main()
 {
-  CharStack charStack;
+  Stack<char> charStack(10);
 
   std::string expression = "9+8*(10+9/3)*[7-7*(8/2)]";
 

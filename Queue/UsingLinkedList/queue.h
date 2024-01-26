@@ -4,10 +4,11 @@
 #include <iostream>
 #include "linkedlist.h"
 
+template <typename elementType>
 class Queue
 {
 private:
-  LinkedList linkedList;
+  LinkedList<elementType> linkedList;
   int queueSize;
   bool noLimit;
   int queuedSize = 0;
@@ -21,7 +22,7 @@ public:
     }
   }
 
-  void push(int val)
+  void enqueue(elementType val)
   {
     if (isFull())
     {
@@ -32,7 +33,7 @@ public:
     linkedList.insertAtHead(val);
   }
 
-  int pop()
+  elementType dequeue()
   {
     if (isEmpty())
     {
@@ -43,7 +44,7 @@ public:
     return linkedList.deleteAtTail();
   }
 
-  int peek(int position)
+  elementType peek(int position)
   {
     if (queuedSize < position)
     {
@@ -75,7 +76,7 @@ public:
     return 0;
   }
 
-  int top()
+  elementType top()
   {
     if (isEmpty())
     {
@@ -85,7 +86,7 @@ public:
     return linkedList.findAtIndex(0);
   }
 
-  int bottom()
+  elementType bottom()
   {
     if (isEmpty())
     {
