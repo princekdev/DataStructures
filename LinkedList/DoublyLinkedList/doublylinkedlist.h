@@ -59,6 +59,40 @@ public:
     tail = newNode;
   }
 
+  bool insertAtIndex(int index, elementType val)
+  {
+    if (index < 0)
+    {
+      return 0;
+    }
+    if (head == NULL)
+    {
+      if (index == 0)
+      {
+        insertAtHead(val);
+        return 1;
+      }
+      return 0;
+    }
+    Node *traverser = head;
+    for (int i = 0; i < index - 1; i++)
+    {
+      traverser = traverser->next;
+      if (traverser == NULL)
+      {
+        return 0;
+      }
+    }
+    if (traverser->next == NULL)
+    {
+      insertAtTail(val);
+    }
+    Node *newNode = new Node(val);
+    newNode->next = traverser->next;
+    traverser->next = newNode;
+    return 1;
+  }
+
   elementType deleteAtHead()
   {
     if (head == NULL)
@@ -114,7 +148,7 @@ public:
     }
     Node *traverser = head;
     int i = 0;
-    while (traverser != NULL)
+    while (traverser->next != NULL)
     {
       if (traverser->next->data == key)
       {
@@ -132,6 +166,14 @@ public:
       i++;
     }
     return -1;
+  }
+
+  void deleteAll()
+  {
+    while (head != NULL)
+    {
+      deleteAtHead();
+    }
   }
 
   int search(elementType key)
@@ -169,6 +211,7 @@ public:
   {
     if (head == NULL)
     {
+      arr = nullptr;
       return 0;
     }
     return toArrayRecursion(head, arr);
@@ -178,6 +221,7 @@ public:
   {
     if (head == NULL)
     {
+      arr = nullptr;
       return 0;
     }
     Node *traverser = head;
@@ -218,10 +262,7 @@ public:
 
   ~DoublyLinkedList()
   {
-    while (head != NULL)
-    {
-      deleteAtHead();
-    }
+    deleteAll();
   }
 };
 

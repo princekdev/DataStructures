@@ -74,6 +74,23 @@ public:
     traverser->next = newNode;
   }
 
+  bool insertAtIndex(int index, elementType val)
+  {
+    Node *traverser = head;
+    for (int i = 0; i < index - 1; i++)
+    {
+      if (traverser == NULL)
+      {
+        return 0;
+      }
+      traverser = traverser->next;
+    }
+    Node *newNode = new Node(val);
+    newNode->next = traverser->next;
+    traverser->next = newNode;
+    return 1;
+  }
+
   elementType deleteAtHead()
   {
     if (head == NULL)
@@ -121,7 +138,7 @@ public:
     }
     Node *traverser = head;
     int i = 0;
-    while (traverser != NULL)
+    while (traverser->next != NULL)
     {
       if (traverser->next->data == key)
       {
@@ -139,6 +156,14 @@ public:
       i++;
     }
     return -1;
+  }
+
+  void deleteAll()
+  {
+    while (head != NULL)
+    {
+      deleteAtHead();
+    }
   }
 
   int search(elementType key)
@@ -176,6 +201,7 @@ public:
   {
     if (head == NULL)
     {
+      arr = nullptr;
       return 0;
     }
     return toArrayRecursion(head, arr);
@@ -185,6 +211,7 @@ public:
   {
     if (head == NULL)
     {
+      arr = nullptr;
       return 0;
     }
     Node *traverser = head;
@@ -249,10 +276,7 @@ public:
 
   ~LinkedList()
   {
-    while (head != NULL)
-    {
-      deleteAtHead();
-    }
+    deleteAll();
   }
 };
 

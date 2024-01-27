@@ -18,6 +18,17 @@ int main()
   doublyLinkedList.insertAtHead(4);
   doublyLinkedList.print();
 
+  doublyLinkedList.deleteAll();
+  if (doublyLinkedList.insertAtIndex(1, 6))
+  {
+    printf("6 inserted at index 1:\n");
+    doublyLinkedList.print();
+  }
+  else
+  {
+    printf("6 insertion at index 1 failed\n");
+  }
+
   int index;
 
   printf("Searching for 4:\n");
@@ -55,12 +66,12 @@ int main()
   }
   doublyLinkedList.print();
 
-  printf("deleted at head:\n");
-  printf("%d deleted\n", doublyLinkedList.deleteAtHead());
+  printf("delete at head:\n");
+  doublyLinkedList.deleteAtHead();
   doublyLinkedList.print();
 
-  printf("deleted at tail:\n");
-  printf("%d deleted\n", doublyLinkedList.deleteAtTail());
+  printf("delete at tail:\n");
+  doublyLinkedList.deleteAtTail();
   doublyLinkedList.print();
 
   return 0;

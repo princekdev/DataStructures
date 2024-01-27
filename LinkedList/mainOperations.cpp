@@ -18,6 +18,17 @@ int main()
   linkedList.insertAtHead(4);
   linkedList.print();
 
+  linkedList.deleteAll();
+  if (linkedList.insertAtIndex(0, 6))
+  {
+    printf("6 inserted at index 5:\n");
+    linkedList.print();
+  }
+  else
+  {
+    printf("index out of range!\n");
+  }
+
   printf("converting to array and printing:\n");
   int *arrayFromLinkedList;
   int size = linkedList.toArray(arrayFromLinkedList);
